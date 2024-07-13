@@ -10,6 +10,7 @@ import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
 import app.example.ui.screen.event.CounterEvent
 import app.example.ui.screen.presenter.CounterPresenter
 import app.example.ui.screen.state.CounterState
@@ -45,4 +46,15 @@ private fun CounterContent(state: CounterState) {
       }
     }
   })
+}
+
+@Preview
+@Composable
+private fun CounterScreenContentPreview() {
+  CounterContent(
+    state = CounterState(
+      count = 0,
+      eventSink = {}
+    )
+  )
 }

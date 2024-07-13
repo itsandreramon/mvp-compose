@@ -45,9 +45,7 @@ dependencies {
   implementation(platform(libs.androidx.compose.bom))
   implementation(libs.androidx.ui)
   implementation(libs.androidx.ui.graphics)
+  implementation(libs.androidx.ui.tooling)
   implementation(libs.androidx.ui.tooling.preview)
   implementation(libs.androidx.material3)
-
-  implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.9.0-RC")
-  implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.9.0-RC")
 }
