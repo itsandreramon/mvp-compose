@@ -4,6 +4,16 @@
 
 # Implementation
 ```kotlin
+sealed interface CounterEvent : Event {
+  data object Increment : CounterEvent
+  data object Decrement : CounterEvent
+}
+
+data class CounterState(
+  val count: Int,
+  override val eventSink: (CounterEvent) -> Unit,
+) : State<CounterEvent>
+
 class CounterPresenter : Presenter<CounterEvent, CounterState> {
 
   @Composable
