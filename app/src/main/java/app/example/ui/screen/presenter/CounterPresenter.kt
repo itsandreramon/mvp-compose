@@ -4,11 +4,15 @@ import app.example.ui.base.Presenter
 import app.example.ui.screen.event.CounterEvent
 import app.example.ui.screen.state.CounterState
 import io.reactivex.rxjava3.core.Observable
-import io.reactivex.rxjava3.subjects.BehaviorSubject
 
 class CounterPresenter : Presenter<CounterState>() {
 
-  private val count = BehaviorSubject.createDefault(0)
+  private val count = eventSink.scan(0) { count, event ->
+    when (event) {
+      CounterEvent.Increment -> count + 1
+      CounterEvent.Decrement -> count - 1
+    }
+  }
 
   private val message = count.map { count ->
     when {
@@ -18,18 +22,8 @@ class CounterPresenter : Presenter<CounterState>() {
     }
   }
 
-  override val uiState = Observable.combineLatest(count, message) { count, message ->
-    CounterState(count, message)
-  }.distinctUntilChanged()
-
-  override fun present() {
-    observables.add(
-      eventSink.subscribe { event ->
-        when (event) {
-          CounterEvent.Increment -> count.onNext(count.value!! + 1)
-          CounterEvent.Decrement -> count.onNext(count.value!! - 1)
-        }
-      }
-    )
-  }
+  override val state = Observable
+    .combineLatest(count, message) { count, message ->
+      CounterState(count, message)
+    }.distinctUntilChanged()
 }

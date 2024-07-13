@@ -7,13 +7,11 @@ import io.reactivex.rxjava3.subjects.BehaviorSubject
 
 abstract class Presenter<S : State<out Event>> {
 
-  protected val observables = CompositeDisposable()
+  private  val observables = CompositeDisposable()
 
   protected val eventSink = BehaviorSubject.create<CounterEvent>()
 
-  abstract val uiState: Observable<S>
-
-  abstract fun present()
+  abstract val state: Observable<S>
 
   fun onEvent(event: CounterEvent) {
     eventSink.onNext(event)

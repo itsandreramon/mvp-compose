@@ -4,6 +4,6 @@ import app.example.ui.base.State
 import app.example.ui.screen.event.CounterEvent
 
 data class CounterState(
-  val count: Int = 0,
-  val message: String = "",
+  val count: Int,
+  val message: String,
 ) : State<CounterEvent>

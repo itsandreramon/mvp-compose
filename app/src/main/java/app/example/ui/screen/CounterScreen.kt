@@ -8,7 +8,6 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rxjava3.subscribeAsState
 import androidx.compose.ui.Alignment
@@ -19,14 +18,8 @@ import app.example.ui.screen.state.CounterState
 
 @Composable
 fun CounterScreen(presenter: CounterPresenter) {
-  val state by presenter.uiState
-    .subscribeAsState(initial = CounterState())
-
-  LaunchedEffect(presenter) {
-    presenter.present()
-  }
-
-  CounterContent(state = state, presenter::onEvent)
+  val state by presenter.state.subscribeAsState(null)
+  state?.let { CounterContent(it, presenter::onEvent) }
 }
 
 @Composable
