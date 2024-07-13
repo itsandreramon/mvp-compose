@@ -15,7 +15,7 @@ import app.example.ui.screen.presenter.CounterPresenter
 import app.example.ui.screen.state.CounterState
 
 @Composable
-fun ExampleScreen(presenter: CounterPresenter) {
+fun CounterScreen(presenter: CounterPresenter) {
   val state = presenter.present()
   CounterContent(state)
 }

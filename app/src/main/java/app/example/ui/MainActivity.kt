@@ -6,7 +6,7 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
-import app.example.ui.screen.ExampleScreen
+import app.example.ui.screen.CounterScreen
 import app.example.ui.screen.presenter.CounterPresenter
 import app.example.ui.theme.NextTheme
 
@@ -21,7 +21,7 @@ class MainActivity : ComponentActivity() {
 @Composable
 private fun NextApp() {
   NextTheme {
-    ExampleScreen(presenter = remember {
+    CounterScreen(presenter = remember {
       CounterPresenter()
     })
   }
