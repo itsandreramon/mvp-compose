@@ -9,7 +9,7 @@ data class CounterState(
   override val eventSink: (CounterEvent) -> Unit,
 ) : State<CounterEvent>
 
-class CounterPresenter : Presenter<CounterEvent, CounterState> {
+class CounterPresenter : Presenter<CounterState> {
 
   @Composable
   override fun present(): CounterState {

@@ -11,7 +11,7 @@ import app.example.ui.screen.event.CounterEvent.Decrement
 import app.example.ui.screen.event.CounterEvent.Increment
 import app.example.ui.screen.state.CounterState
 
-class CounterPresenter : Presenter<CounterEvent, CounterState> {
+class CounterPresenter : Presenter<CounterState> {
 
   @Composable
   override fun present(): CounterState {
