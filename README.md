@@ -26,6 +26,12 @@ class CounterPresenter : Presenter<CounterState> {
     )
   }
 }
+
+@Composable
+fun CounterScreen(presenter: CounterPresenter) {
+  val state = presenter.present()
+  CounterContent(state)
+}
 ```
 
 # Screenshots
