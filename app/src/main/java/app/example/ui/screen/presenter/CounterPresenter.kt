@@ -1,39 +1,33 @@
 package app.example.ui.screen.presenter
 
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.derivedStateOf
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableIntStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
 import app.example.ui.base.Presenter
-import app.example.ui.screen.event.CounterEvent.Decrement
-import app.example.ui.screen.event.CounterEvent.Increment
+import app.example.ui.screen.event.CounterEvent
 import app.example.ui.screen.state.CounterState
+import io.reactivex.rxjava3.core.Observable
+import io.reactivex.rxjava3.subjects.BehaviorSubject
 
-class CounterPresenter : Presenter<CounterState> {
+class CounterPresenter : Presenter<CounterState>() {
 
-  @Composable
-  override fun present(): CounterState {
-    var count by rememberSaveable { mutableIntStateOf(0) }
-    val message by remember {
-      derivedStateOf {
-        when {
-          count < 0 -> "Counter is less than 0"
-          count > 0 -> "Counter is greater than 0"
-          else -> "Counter is 0"
-        }
-      }
+  private val count = BehaviorSubject.createDefault(0)
+
+  private val message = count.map { count ->
+    when {
+      count < 0 -> "Counter is less than 0"
+      count > 0 -> "Counter is greater than 0"
+      else -> "Counter is 0"
     }
+  }
 
-    return CounterState(
-      count = count,
-      message = message,
-      eventSink = { event ->
+  override val uiState = Observable.combineLatest(count, message) { count, message ->
+    CounterState(count, message)
+  }.distinctUntilChanged()
+
+  override fun present() {
+    observables.add(
+      eventSink.subscribe { event ->
         when (event) {
-          Increment -> count += 1
-          Decrement -> count -= 1
+          CounterEvent.Increment -> count.onNext(count.value!! + 1)
+          CounterEvent.Decrement -> count.onNext(count.value!! - 1)
         }
       }
     )

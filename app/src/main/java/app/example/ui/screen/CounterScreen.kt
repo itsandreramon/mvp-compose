@@ -8,30 +8,29 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.rxjava3.subscribeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import app.example.ui.screen.event.CounterEvent
 import app.example.ui.screen.presenter.CounterPresenter
 import app.example.ui.screen.state.CounterState
 
 @Composable
 fun CounterScreen(presenter: CounterPresenter) {
-  val state = presenter.present()
-  CounterContent(state)
+  val state by presenter.uiState
+    .subscribeAsState(initial = CounterState())
+
+  LaunchedEffect(presenter) {
+    presenter.present()
+  }
+
+  CounterContent(state = state, presenter::onEvent)
 }
 
 @Composable
-private fun CounterContent(state: CounterState) {
-  val increment = remember {
-    { state.eventSink(CounterEvent.Increment) }
-  }
-
-  val decrement = remember {
-    { state.eventSink(CounterEvent.Decrement) }
-  }
-
+private fun CounterContent(state: CounterState, onEvent: (CounterEvent) -> Unit) {
   Scaffold(content = { paddingValues ->
     Box(
       modifier = Modifier.fillMaxSize(),
@@ -41,27 +40,15 @@ private fun CounterContent(state: CounterState) {
         modifier = Modifier.padding(paddingValues),
         horizontalAlignment = Alignment.CenterHorizontally,
       ) {
-        TextButton(onClick = increment) {
+        TextButton(onClick = { onEvent(CounterEvent.Increment) }) {
           Text("Increment")
         }
         Text("Count: ${state.count}")
         Text(state.message)
-        TextButton(onClick = decrement) {
+        TextButton(onClick = { onEvent(CounterEvent.Decrement) }) {
           Text("Decrement")
         }
       }
     }
   })
-}
-
-@Preview
-@Composable
-private fun CounterScreenContentPreview() {
-  CounterContent(
-    state = CounterState(
-      count = 0,
-      message = "Count is 0",
-      eventSink = {}
-    )
-  )
 }

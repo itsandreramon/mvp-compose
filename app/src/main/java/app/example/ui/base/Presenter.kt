@@ -1,9 +1,25 @@
 package app.example.ui.base
 
-import androidx.compose.runtime.Composable
+import app.example.ui.screen.event.CounterEvent
+import io.reactivex.rxjava3.core.Observable
+import io.reactivex.rxjava3.disposables.CompositeDisposable
+import io.reactivex.rxjava3.subjects.BehaviorSubject
 
-interface Presenter<S : State<out Event>> {
+abstract class Presenter<S : State<out Event>> {
 
-  @Composable
-  fun present(): S
+  protected val observables = CompositeDisposable()
+
+  protected val eventSink = BehaviorSubject.create<CounterEvent>()
+
+  abstract val uiState: Observable<S>
+
+  abstract fun present()
+
+  fun onEvent(event: CounterEvent) {
+    eventSink.onNext(event)
+  }
+
+  fun clear() {
+    observables.clear()
+  }
 }
