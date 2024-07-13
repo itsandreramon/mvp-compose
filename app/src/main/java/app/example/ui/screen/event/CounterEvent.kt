@@ -1,6 +1,6 @@
-package app.next.ui.screen.event
+package app.example.ui.screen.event
 
-import app.next.ui.base.Event
+import app.example.ui.base.Event
 
 sealed interface CounterEvent : Event {
     data object Increment : CounterEvent

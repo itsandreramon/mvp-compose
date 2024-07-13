@@ -1,4 +1,4 @@
-package app.next
+package app.example
 
 import android.app.Application
 

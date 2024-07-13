@@ -1,7 +1,7 @@
-package app.next.ui.screen.state
+package app.example.ui.screen.state
 
-import app.next.ui.base.State
-import app.next.ui.screen.event.CounterEvent
+import app.example.ui.base.State
+import app.example.ui.screen.event.CounterEvent
 
 data class CounterState(
     val count: Int,

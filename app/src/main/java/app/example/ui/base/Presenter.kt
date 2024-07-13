@@ -1,4 +1,4 @@
-package app.next.ui.base
+package app.example.ui.base
 
 import androidx.compose.runtime.Composable
 

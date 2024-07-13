@@ -1,4 +1,4 @@
-package app.next.ui.screen
+package app.example.ui.screen
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -10,18 +10,18 @@ import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import app.next.ui.screen.event.CounterEvent
-import app.next.ui.screen.presenter.CounterPresenter
-import app.next.ui.screen.state.CounterState
+import app.example.ui.screen.event.CounterEvent
+import app.example.ui.screen.presenter.CounterPresenter
+import app.example.ui.screen.state.CounterState
 
 @Composable
 fun ExampleScreen(presenter: CounterPresenter) {
     val state = presenter.present()
-    ExampleContent(state)
+    CounterContent(state)
 }
 
 @Composable
-private fun ExampleContent(state: CounterState) {
+private fun CounterContent(state: CounterState) {
     Scaffold(content = { paddingValues ->
         Box(
             modifier = Modifier.fillMaxSize(),

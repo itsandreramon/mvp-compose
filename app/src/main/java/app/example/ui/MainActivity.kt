@@ -1,4 +1,4 @@
-package app.next.ui
+package app.example.ui
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -6,9 +6,9 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
-import app.next.ui.screen.ExampleScreen
-import app.next.ui.screen.presenter.CounterPresenter
-import app.next.ui.theme.NextTheme
+import app.example.ui.screen.ExampleScreen
+import app.example.ui.screen.presenter.CounterPresenter
+import app.example.ui.theme.NextTheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
