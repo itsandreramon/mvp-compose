@@ -5,5 +5,6 @@ import app.example.ui.screen.event.CounterEvent
 
 data class CounterState(
   val count: Int,
+  val message: String,
   override val eventSink: (CounterEvent) -> Unit,
 ) : State<CounterEvent>

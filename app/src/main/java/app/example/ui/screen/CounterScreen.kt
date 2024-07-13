@@ -45,6 +45,7 @@ private fun CounterContent(state: CounterState) {
           Text("Increment")
         }
         Text("Count: ${state.count}")
+        Text(state.message)
         TextButton(onClick = decrement) {
           Text("Decrement")
         }
@@ -59,6 +60,7 @@ private fun CounterScreenContentPreview() {
   CounterContent(
     state = CounterState(
       count = 0,
+      message = "Count is 0",
       eventSink = {}
     )
   )
