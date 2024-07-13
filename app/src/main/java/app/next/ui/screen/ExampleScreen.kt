@@ -1,4 +1,4 @@
-package app.next.ui.screen.example
+package app.next.ui.screen
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -10,9 +10,9 @@ import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import app.next.ui.screen.example.event.CounterEvent
-import app.next.ui.screen.example.presenter.CounterPresenter
-import app.next.ui.screen.example.state.CounterState
+import app.next.ui.screen.event.CounterEvent
+import app.next.ui.screen.presenter.CounterPresenter
+import app.next.ui.screen.state.CounterState
 
 @Composable
 fun ExampleScreen(presenter: CounterPresenter) {
@@ -32,13 +32,13 @@ private fun ExampleContent(state: CounterState) {
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
                 TextButton(onClick = {
-                    state.sink(CounterEvent.Increment)
+                    state.eventSink(CounterEvent.Increment)
                 }) {
                     Text("Increment")
                 }
                 Text("Count: ${state.count}")
                 TextButton(onClick = {
-                    state.sink(CounterEvent.Decrement)
+                    state.eventSink(CounterEvent.Decrement)
                 }) {
                     Text("Decrement")
                 }

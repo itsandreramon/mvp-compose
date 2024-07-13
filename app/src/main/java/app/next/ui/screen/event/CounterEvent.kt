@@ -1,4 +1,4 @@
-package app.next.ui.screen.example.event
+package app.next.ui.screen.event
 
 import app.next.ui.base.Event
 
