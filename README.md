@@ -13,7 +13,7 @@ class CounterPresenter : Presenter<CounterState> {
 
   @Composable
   override fun present(): CounterState {
-    var count by remember { mutableIntStateOf(0) }
+    var count by rememberSaveable { mutableIntStateOf(0) }
 
     return CounterState(
       count = count,
