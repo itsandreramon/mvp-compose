@@ -8,19 +8,19 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import app.example.ui.screen.CounterScreen
 import app.example.ui.screen.presenter.CounterPresenter
-import app.example.ui.theme.NextTheme
+import app.example.ui.theme.AppTheme
 
 class MainActivity : ComponentActivity() {
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     enableEdgeToEdge()
-    setContent { NextApp() }
+    setContent { App() }
   }
 }
 
 @Composable
-private fun NextApp() {
-  NextTheme {
+private fun App() {
+  AppTheme {
     CounterScreen(presenter = remember {
       CounterPresenter()
     })
