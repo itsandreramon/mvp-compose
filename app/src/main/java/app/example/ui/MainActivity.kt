@@ -11,18 +11,18 @@ import app.example.ui.screen.presenter.CounterPresenter
 import app.example.ui.theme.NextTheme
 
 class MainActivity : ComponentActivity() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
-        setContent { NextApp() }
-    }
+  override fun onCreate(savedInstanceState: Bundle?) {
+    super.onCreate(savedInstanceState)
+    enableEdgeToEdge()
+    setContent { NextApp() }
+  }
 }
 
 @Composable
 private fun NextApp() {
-    NextTheme {
-        ExampleScreen(presenter = remember {
-            CounterPresenter()
-        })
-    }
+  NextTheme {
+    ExampleScreen(presenter = remember {
+      CounterPresenter()
+    })
+  }
 }

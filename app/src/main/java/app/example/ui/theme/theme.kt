@@ -11,16 +11,16 @@ private val LightColorScheme = lightColorScheme()
 
 @Composable
 fun NextTheme(
-    darkTheme: Boolean = isSystemInDarkTheme(),
-    content: @Composable () -> Unit
+  darkTheme: Boolean = isSystemInDarkTheme(),
+  content: @Composable () -> Unit
 ) {
-    val colorScheme = when {
-        darkTheme -> DarkColorScheme
-        else -> LightColorScheme
-    }
+  val colorScheme = when {
+    darkTheme -> DarkColorScheme
+    else -> LightColorScheme
+  }
 
-    MaterialTheme(
-        colorScheme = colorScheme,
-        content = content
-    )
+  MaterialTheme(
+    colorScheme = colorScheme,
+    content = content
+  )
 }

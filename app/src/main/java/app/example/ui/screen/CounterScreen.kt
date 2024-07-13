@@ -16,33 +16,33 @@ import app.example.ui.screen.state.CounterState
 
 @Composable
 fun ExampleScreen(presenter: CounterPresenter) {
-    val state = presenter.present()
-    CounterContent(state)
+  val state = presenter.present()
+  CounterContent(state)
 }
 
 @Composable
 private fun CounterContent(state: CounterState) {
-    Scaffold(content = { paddingValues ->
-        Box(
-            modifier = Modifier.fillMaxSize(),
-            contentAlignment = Alignment.Center
-        ) {
-            Column(
-                modifier = Modifier.padding(paddingValues),
-                horizontalAlignment = Alignment.CenterHorizontally,
-            ) {
-                TextButton(onClick = {
-                    state.eventSink(CounterEvent.Increment)
-                }) {
-                    Text("Increment")
-                }
-                Text("Count: ${state.count}")
-                TextButton(onClick = {
-                    state.eventSink(CounterEvent.Decrement)
-                }) {
-                    Text("Decrement")
-                }
-            }
+  Scaffold(content = { paddingValues ->
+    Box(
+      modifier = Modifier.fillMaxSize(),
+      contentAlignment = Alignment.Center
+    ) {
+      Column(
+        modifier = Modifier.padding(paddingValues),
+        horizontalAlignment = Alignment.CenterHorizontally,
+      ) {
+        TextButton(onClick = {
+          state.eventSink(CounterEvent.Increment)
+        }) {
+          Text("Increment")
         }
-    })
+        Text("Count: ${state.count}")
+        TextButton(onClick = {
+          state.eventSink(CounterEvent.Decrement)
+        }) {
+          Text("Decrement")
+        }
+      }
+    }
+  })
 }

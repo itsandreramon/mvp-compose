@@ -13,18 +13,18 @@ import app.example.ui.screen.state.CounterState
 
 class CounterPresenter : Presenter<CounterEvent, CounterState> {
 
-    @Composable
-    override fun present(): CounterState {
-        var count by remember { mutableIntStateOf(0) }
+  @Composable
+  override fun present(): CounterState {
+    var count by remember { mutableIntStateOf(0) }
 
-        return CounterState(
-            count = count,
-            eventSink = { event ->
-                when (event) {
-                    Increment -> count += 1
-                    Decrement -> count -= 1
-                }
-            }
-        )
-    }
+    return CounterState(
+      count = count,
+      eventSink = { event ->
+        when (event) {
+          Increment -> count += 1
+          Decrement -> count -= 1
+        }
+      }
+    )
+  }
 }
