@@ -6,31 +6,33 @@ sealed interface CounterEvent : Event {
 
 data class CounterState(
   val count: Int,
-  override val eventSink: (CounterEvent) -> Unit,
 ) : State<CounterEvent>
 
-class CounterPresenter : Presenter<CounterState> {
+class CounterPresenter : Presenter<CounterState>() {
 
-  @Composable
-  override fun present(): CounterState {
-    var count by rememberSaveable { mutableIntStateOf(0) }
+  private val eventSink = PublishSubject.create<CounterEvent>()
 
-    return CounterState(
-      count = count,
-      eventSink = { event ->
-        when (event) {
-          Increment -> count += 1
-          Decrement -> count -= 1
-        }
-      }
-    )
+  private val count = eventSink.scan(0L) { count, event ->
+    when (event) {
+      CounterEvent.Increment -> count + 1
+      CounterEvent.Decrement -> count - 1
+    }
+  }
+
+  override val stateObservable = count
+    .map { count -> CounterState(count) }
+    .replay(1)
+    .distinctUntilChanged()
+
+  fun onEvent(event: CounterEvent) {
+    eventSink.onNext(event)
   }
 }
 
 @Composable
 fun CounterScreen(presenter: CounterPresenter) {
-  val state = presenter.present()
-  CounterContent(state)
+  val state = presenter.stateObservable.subscribeAsStateWithLifecycle()
+  state?.let { CounterContent(it, presenter::onEvent) }
 }
 ```
 
