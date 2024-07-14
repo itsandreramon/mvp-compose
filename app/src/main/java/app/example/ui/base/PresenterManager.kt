@@ -38,6 +38,7 @@ class PresenterManager(application: Application) {
 
       override fun onActivityDestroyed(activity: Activity) {
         if (!activity.isChangingConfigurations) {
+          presentersMap.onEach { (_, presenter) -> presenter.destroy() }
           presentersMap.clear()
         }
       }
