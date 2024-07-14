@@ -17,12 +17,10 @@ import io.reactivex.rxjava3.disposables.Disposable
 fun <T : Any> Observable<T>.subscribeAsStateWithLifecycle(
   initialValue: T? = null,
   lifecycleOwner: LifecycleOwner = LocalLifecycleOwner.current,
-  minActiveState: Lifecycle.State = Lifecycle.State.STARTED,
 ): State<T?> {
   return subscribeAsStateWithLifecycle(
     initialValue = initialValue,
     lifecycle = lifecycleOwner.lifecycle,
-    minActiveState = minActiveState,
   )
 }
 
@@ -30,19 +28,15 @@ fun <T : Any> Observable<T>.subscribeAsStateWithLifecycle(
 fun <T : Any> Observable<T>.subscribeAsStateWithLifecycle(
   initialValue: T?,
   lifecycle: Lifecycle,
-  minActiveState: Lifecycle.State = Lifecycle.State.STARTED,
 ): State<T?> {
   val state = remember { mutableStateOf(initialValue) }
 
-  DisposableEffect(lifecycle, this) {
+  DisposableEffect(lifecycle) {
     var disposable: Disposable? = null
-
     val lifecycleObserver = object : DefaultLifecycleObserver {
       override fun onStart(owner: LifecycleOwner) {
-        if (lifecycle.currentState.isAtLeast(minActiveState)) {
-          disposable = observeOn(AndroidSchedulers.mainThread())
-            .subscribe { value -> state.value = value }
-        }
+        disposable = observeOn(AndroidSchedulers.mainThread())
+          .subscribe { value -> state.value = value }
       }
 
       override fun onStop(owner: LifecycleOwner) {
