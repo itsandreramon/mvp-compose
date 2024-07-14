@@ -1,6 +1,5 @@
 package app.example.ui.screen.presenter
 
-import android.util.Log
 import app.example.ui.base.Presenter
 import app.example.ui.base.PresenterFactory
 import app.example.ui.screen.event.CounterEvent
@@ -30,9 +29,9 @@ class CounterPresenter : Presenter<CounterState>() {
   }
 
   override val mStateObservable = Observable
-    .combineLatest(count, message, timer) { count, message, timer -> CounterState(count, message, timer) }
-    .doOnSubscribe { Log.d("xyz", "starting ui state") }
-    .doOnDispose { Log.d("xyz", "stopping ui state") }
+    .combineLatest(count, message, timer) { count, message, timer ->
+      CounterState(count, message, timer)
+    }
 
   class Factory : PresenterFactory<CounterPresenter> {
     override fun create(): CounterPresenter {
