@@ -46,7 +46,7 @@ class PresenterManager(application: Application) {
   }
 
   @Suppress("UNCHECKED_CAST")
-  fun <P : Presenter<*>> getPresenter(key: KClass<out Presenter<*>>, factory: PresenterFactory<P>): P {
-    return presentersMap.getOrPut(key) { factory.create() } as P
+  fun <P : Presenter<*>> getPresenter(key: KClass<out Presenter<*>>, factory: () -> P): P {
+    return presentersMap.getOrPut(key) { factory() } as P
   }
 }

@@ -25,7 +25,7 @@ private fun App(app: App) {
     CounterScreen(presenter = remember {
       app.presenterManager.getPresenter(
         key = CounterPresenter::class,
-        factory = CounterPresenter.Factory()
+        factory = { CounterPresenter() }
       )
     })
   }

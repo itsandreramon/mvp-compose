@@ -1,7 +1,6 @@
 package app.example.ui.screen.presenter
 
 import app.example.ui.base.Presenter
-import app.example.ui.base.PresenterFactory
 import app.example.ui.screen.event.CounterEvent
 import app.example.ui.screen.state.CounterState
 import io.reactivex.rxjava3.core.Observable
@@ -32,10 +31,4 @@ class CounterPresenter : Presenter<CounterState>() {
     .combineLatest(count, message, timer) { count, message, timer ->
       CounterState(count, message, timer)
     }
-
-  class Factory : PresenterFactory<CounterPresenter> {
-    override fun create(): CounterPresenter {
-      return CounterPresenter()
-    }
-  }
 }
