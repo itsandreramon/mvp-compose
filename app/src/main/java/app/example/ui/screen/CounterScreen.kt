@@ -8,7 +8,6 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
@@ -24,13 +23,7 @@ fun CounterScreen(presenter: CounterPresenter) {
 
 @Composable
 private fun CounterContent(state: CounterState) {
-  val increment = remember {
-    { state.eventSink(CounterEvent.Increment) }
-  }
-
-  val decrement = remember {
-    { state.eventSink(CounterEvent.Decrement) }
-  }
+  val eventSink = state.eventSink
 
   Scaffold(content = { paddingValues ->
     Box(
@@ -41,12 +34,12 @@ private fun CounterContent(state: CounterState) {
         modifier = Modifier.padding(paddingValues),
         horizontalAlignment = Alignment.CenterHorizontally,
       ) {
-        TextButton(onClick = increment) {
+        TextButton(onClick = { eventSink(CounterEvent.Increment)} ) {
           Text("Increment")
         }
         Text("Count: ${state.count}")
         Text(state.message)
-        TextButton(onClick = decrement) {
+        TextButton(onClick = { eventSink(CounterEvent.Decrement)}) {
           Text("Decrement")
         }
       }
