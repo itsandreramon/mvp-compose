@@ -22,7 +22,7 @@ class CounterPresenter : Presenter<CounterState>() {
     }
   }
 
-  override val state = Observable
+  override val stateObservable = Observable
     .combineLatest(count, message) { count, message ->
       CounterState(count, message)
     }.distinctUntilChanged()

@@ -7,17 +7,17 @@ import io.reactivex.rxjava3.subjects.BehaviorSubject
 
 abstract class Presenter<S : State<out Event>> {
 
-  protected val observables = CompositeDisposable()
+  protected val subscriptions = CompositeDisposable()
 
   protected val eventSink = BehaviorSubject.create<CounterEvent>()
 
-  abstract val state: Observable<S>
+  abstract val stateObservable: Observable<S>
 
   fun onEvent(event: CounterEvent) {
     eventSink.onNext(event)
   }
 
-  fun clear() {
-    observables.clear()
+  fun destroy() {
+    subscriptions.clear()
   }
 }

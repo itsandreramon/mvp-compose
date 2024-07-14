@@ -18,7 +18,7 @@ import app.example.ui.screen.state.CounterState
 
 @Composable
 fun CounterScreen(presenter: CounterPresenter) {
-  val state by presenter.state.subscribeAsState(null)
+  val state by presenter.stateObservable.subscribeAsState(null)
   state?.let { CounterContent(it, presenter::onEvent) }
 }
 
