@@ -1,5 +1,6 @@
 package app.example.ui.screen
 
+import android.util.Log
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -9,21 +10,22 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.rxjava3.subscribeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import app.example.ui.screen.event.CounterEvent
 import app.example.ui.screen.presenter.CounterPresenter
 import app.example.ui.screen.state.CounterState
+import app.example.ui.screen.util.subscribeAsStateWithLifecycle
 
 @Composable
 fun CounterScreen(presenter: CounterPresenter) {
-  val state by presenter.stateObservable.subscribeAsState(null)
+  val state by presenter.stateObservable.subscribeAsStateWithLifecycle()
   state?.let { CounterContent(it, presenter::onEvent) }
 }
 
 @Composable
 private fun CounterContent(state: CounterState, onEvent: (CounterEvent) -> Unit) {
+  Log.d("xyz", "got state: $state in ui")
   Scaffold(content = { paddingValues ->
     Box(
       modifier = Modifier.fillMaxSize(),
@@ -38,6 +40,7 @@ private fun CounterContent(state: CounterState, onEvent: (CounterEvent) -> Unit)
         }
         Text("Count: ${state.count}")
         Text(state.message)
+        Text("Time elapsed: ${state.timer}")
         TextButton(onClick = { onEvent(CounterEvent.Decrement) }) {
           Text("Decrement")
         }

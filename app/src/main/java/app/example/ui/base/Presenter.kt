@@ -4,6 +4,7 @@ import app.example.ui.screen.event.CounterEvent
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.subjects.BehaviorSubject
+import java.util.concurrent.TimeUnit
 
 abstract class Presenter<S : State<out Event>> {
 
@@ -11,7 +12,13 @@ abstract class Presenter<S : State<out Event>> {
 
   protected val eventSink = BehaviorSubject.create<CounterEvent>()
 
-  abstract val stateObservable: Observable<S>
+  abstract val mStateObservable: Observable<S>
+
+  val stateObservable by lazy {
+    mStateObservable.replay(1)
+      .refCount(1, 5, TimeUnit.SECONDS)
+      .distinctUntilChanged()
+  }
 
   fun onEvent(event: CounterEvent) {
     eventSink.onNext(event)

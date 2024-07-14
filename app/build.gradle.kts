@@ -46,4 +46,5 @@ dependencies {
   implementation(libs.compose.material3)
   implementation(libs.compose.runtime.rx)
   implementation(libs.rx)
+  implementation(libs.rx.android)
 }

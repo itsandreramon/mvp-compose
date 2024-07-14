@@ -1,13 +1,20 @@
 package app.example.ui.screen.presenter
 
+import android.util.Log
 import app.example.ui.base.Presenter
+import app.example.ui.base.PresenterFactory
 import app.example.ui.screen.event.CounterEvent
 import app.example.ui.screen.state.CounterState
 import io.reactivex.rxjava3.core.Observable
+import java.util.concurrent.TimeUnit
 
 class CounterPresenter : Presenter<CounterState>() {
 
-  private val count = eventSink.scan(0) { count, event ->
+  private val timer = Observable
+    .interval(1, TimeUnit.SECONDS)
+    .startWithItem(0)
+
+  private val count = eventSink.scan(0L) { count, event ->
     when (event) {
       CounterEvent.Increment -> count + 1
       CounterEvent.Decrement -> count - 1
@@ -22,8 +29,14 @@ class CounterPresenter : Presenter<CounterState>() {
     }
   }
 
-  override val stateObservable = Observable
-    .combineLatest(count, message) { count, message ->
-      CounterState(count, message)
-    }.distinctUntilChanged()
+  override val mStateObservable = Observable
+    .combineLatest(count, message, timer) { count, message, timer -> CounterState(count, message, timer) }
+    .doOnSubscribe { Log.d("xyz", "starting ui state") }
+    .doOnDispose { Log.d("xyz", "stopping ui state") }
+
+  class Factory : PresenterFactory<CounterPresenter> {
+    override fun create(): CounterPresenter {
+      return CounterPresenter()
+    }
+  }
 }
