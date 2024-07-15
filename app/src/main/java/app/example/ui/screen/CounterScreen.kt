@@ -1,6 +1,5 @@
 package app.example.ui.screen
 
-import android.util.Log
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -25,7 +24,6 @@ fun CounterScreen(presenter: CounterPresenter) {
 
 @Composable
 private fun CounterContent(state: CounterState, onEvent: (CounterEvent) -> Unit) {
-  Log.d("xyz", "got state: $state in ui")
   Scaffold(content = { paddingValues ->
     Box(
       modifier = Modifier.fillMaxSize(),
